@@ -1,0 +1,13 @@
+streamlit
+pandas
+openpyxl
+langchain
+langchain-openai
+langchain-community
+langchain-experimental
+faiss-cpu
+python-dotenv
+tiktoken
+matplotlib
+seaborn
+tabulate
