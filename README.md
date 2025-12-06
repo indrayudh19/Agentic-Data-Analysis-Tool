@@ -1,144 +1,201 @@
+🤖 Agentic Data Analyst
 
-🤖 #Agentic Data Analyst
+A fully autonomous AI-powered data analysis system built with LangChain, OpenAI, FAISS, and Streamlit.
 
-A fully autonomous data analysis system powered by LangChain, OpenAI, and FAISS.
-
-This project implements an AI Data Analyst that can ingest raw datasets (CSV/Excel), understand them contextually using Vector Search (RAG), and perform complex quantitative analysis and visualization capabilities on command. It features a modern Streamlit interface for seamless interaction.
+This project delivers an AI Data Analyst capable of ingesting raw datasets, cleaning them, embedding them for semantic understanding, and performing quantitative + qualitative analysis autonomously through agentic loops.
+It also features a modern Streamlit dashboard for seamless user interaction.
 
 🚀 Key Features
+📂 Automated Ingestion & Cleaning
 
-📂 Automated Ingestion & Cleaning:
+Supports CSV (.csv) and Excel (.xlsx) file uploads
 
-Supports .csv and .xlsx uploads.
+Automatically:
 
-Automatically handles missing values, detects date columns, and cleans data types before analysis.
+Handles missing values
 
-🧠 Hybrid Intelligence (RAG + Pandas):
+Detects date columns
 
-Qualitative Analysis: Uses FAISS vector search to understand text descriptions, categorical trends, and "unstructured" queries (e.g., "What are the common themes in feedback?").
+Fixes inconsistent data types
 
-Quantitative Analysis: A specialized LangChain Pandas Agent executes Python code to calculate exact metrics (e.g., "What is the average sales for Region X?").
+Prepares the dataset for analysis within seconds
 
-📊 Autonomous Visualization:
+🧠 Hybrid Intelligence: RAG + Pandas
+✔️ Qualitative Analysis (Semantic Understanding)
 
-The agent can decide when to generate a plot.
+Powered by FAISS Vector Search, the system can:
 
-Uses Matplotlib/Seaborn to create charts and automatically displays them in the chat interface.
+Understand unstructured questions
 
-🧹 Session Management:
+Detect patterns
 
-Built-in "Hard Reset" ensures no cross-contamination between analysis sessions. Every file upload triggers a fresh environment cleanup.
+Identify semantic themes (e.g., "What are the common issues reported by customers?")
+
+✔️ Quantitative Analysis (Code Execution)
+
+A dedicated LangChain Pandas Agent executes Python operations such as:
+
+Mean/median calculations
+
+Grouping, filtering, aggregations
+
+Trend analysis
+
+Numerical comparisons
+
+📊 Autonomous Visualization
+
+The agent decides when a plot is necessary
+
+Automatically generates:
+
+Line charts
+
+Bar charts
+
+Scatter plots
+
+Distribution charts
+
+Uses Matplotlib + Seaborn
+
+Displays plots directly inside the Streamlit chat interface
+
+🧹 Session Management
+
+Every dataset upload triggers a Hard Reset
+
+Ensures:
+
+No cross-contamination
+
+Clean memory
+
+Fresh vector index
+
+All temporary files stored locally and wiped on reset
 
 🛠️ Tech Stack
 
 Framework: Streamlit
-
-LLM Orchestration: LangChain & langchain-experimental
-
-Vector Database: FAISS (Facebook AI Similarity Search)
-
-Model: OpenAI gpt-4o (Embeddings & Chat)
-
+LLM Orchestration: LangChain, langchain-experimental
+Vector Database: FAISS
+Models: OpenAI GPT-4o (Chat + Embeddings)
 Data Processing: Pandas, OpenPyXL
-
 Visualization: Matplotlib, Seaborn
 
 🏗️ Architecture
 
-The system follows a multi-step Agentic Loop:
+The system follows a multi-layer Agentic Loop:
 
-Ingestion Layer:
+1️⃣ Ingestion Layer
 
-Raw data is loaded and preprocessed (NaN filling, type casting).
+Loads and preprocesses raw data
 
-A Global Context JSON is generated (summary stats, column types) to give the LLM a "bird's eye view".
+Cleans NaN values and inconsistent types
 
-Embedding Layer:
+Generates a Global Context JSON summarizing the dataset
 
-Each row is converted into a rich text summary (e.g., "Sales: 500 (Above Average) | Region: West").
+2️⃣ Embedding Layer
 
-These summaries are embedded using OpenAI embeddings and stored in a local FAISS index.
+Converts every row into a semantic text summary
 
-Agent Core:
+Embeds using OpenAI embeddings
 
-The Main Agent receives a user query.
+Stores vectors in a local FAISS index
 
-It evaluates which tool to use:
+3️⃣ Agent Core
 
-pandas_tool: For math/code execution.
+The main agent receives user questions and decides which tool to use:
 
-vector_search_tool: For semantic search/context retrieval.
+Tool	Purpose
+pandas_tool	For calculations, metrics, and code execution
+vector_search_tool	For semantic lookup using FAISS
+plotting_tool	For automatic chart generation
 
-plotting_tool: For generating visual charts.
-
-The agent executes the tool, observes the output, and synthesizes a final natural language response.
+The agent executes tools, receives observations, and builds a final natural language answer.
 
 📦 Installation
-
-Clone the repository:
-
-git clone [https://github.com/yourusername/agentic-data-analyst.git](https://github.com/yourusername/agentic-data-analyst.git)
+1. Clone the repository
+git clone https://github.com/yourusername/agentic-data-analyst.git
 cd agentic-data-analyst
 
-
-Create a virtual environment (Recommended):
-
+2. Create a virtual environment (Recommended)
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate      # Windows: venv\Scripts\activate
 
-
-Install dependencies:
-
+3. Install dependencies
 pip install -r requirements.txt
 
-
 🖥️ Usage
-
-Run the application:
-
+Start the App
 streamlit run app.py
 
+Configure API Key
 
-Configure API Key:
+The UI will open in your browser
 
-The app will launch in your browser.
+Paste your OpenAI API key in the sidebar
 
-In the Sidebar, paste your OpenAI API Key. (This is required for the Agent and Embeddings).
+Upload Data
 
-Upload Data:
+Upload a .csv or .xlsx file
 
-Upload any CSV or Excel file.
+The system:
 
-The system will automatically clean, ingest, and build the vector index (watch the progress bar!).
+Cleans it
 
-Chat:
+Generates embeddings
 
-Ask questions like:
+Builds vector index
 
-"Show me the trend of Sales over time." (Triggers Plotting Tool)
+Status is shown via a progress bar
 
-"Which region has the most complaints?" (Triggers Vector Search/Pandas)
+Start Chatting
 
-"Give me a summary of the dataset." (Triggers Global Context)
+Examples:
+
+“Show me the trend of Sales over time.”
+→ Triggers plotting tool
+
+“Which category has the highest returns?”
+→ RAG + Pandas
+
+“Give me a complete summary of the dataset.”
+→ Global context reasoning
 
 📂 Project Structure
-
 ├── agents/
-│   ├── data_analyst_agent.py  # Main LangChain Agent definition
-│   └── tools.py               # Custom tools (Vector Search, Plotting)
+│   ├── data_analyst_agent.py      # Main LangChain Agent
+│   └── tools.py                   # Custom tools (Vector Search, Plotting)
+│
 ├── embedding/
-│   ├── embedding_service.py   # Row serialization & Global Context generation
-│   └── vectorstore.py         # FAISS index creation & loading
+│   ├── embedding_service.py       # Row summaries & global context
+│   └── vectorstore.py             # FAISS index management
+│
 ├── ingestion/
-│   ├── data_ingestion.py      # File loading logic
-│   └── preprocessing.py       # Data cleaning logic
-├── app.py                     # Main Streamlit UI application
-├── requirements.txt           # Python dependencies
-└── README.md                  # Project documentation
+│   ├── data_ingestion.py          # File loading logic
+│   └── preprocessing.py           # Dataset cleaning logic
+│
+├── app.py                         # Streamlit UI
+├── requirements.txt               # Dependencies
+└── README.md                      # Documentation
 
+⚠️ Important Notes
+🔐 Data Privacy
 
-⚠️ Notes
+Your OpenAI API key is never stored
 
-Data Privacy: Your API key is not stored persistently. All data (uploads, vector indices, plots) is stored locally in the data/ and plots/ folders and is wiped automatically whenever you restart the app or upload a new file.
+All user data remains local
 
-Model Cost: This system makes calls to OpenAI for both Embeddings (one-time per file) and Chat (per query). Ensure your account has sufficient credits.
+Temporary files inside data/ and plots/ are automatically deleted on reset
+
+💰 Model Costs
+
+The system uses OpenAI models for:
+
+Row embeddings (one-time per upload)
+
+Chat responses (on every question)
+
+Ensure your OpenAI account has sufficient credits.
