@@ -1,4 +1,4 @@
-🤖 Agentic Data Analyst
+🤖 **Agentic Data Analyst**
 
 A fully autonomous AI-powered data analysis system built with LangChain, OpenAI, FAISS, and Streamlit.
 
